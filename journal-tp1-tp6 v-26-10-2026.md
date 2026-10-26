@@ -2,12 +2,12 @@
 
 **Module** : Développement et déploiement d'applications intelligentes · **Enseignant** : A. Larhlimi
 
-| | Membre A | Membre B |
+| | Membre A (travail individuel) | Membre B (travail individuel) |
 | --- | --- | --- |
-| Nom | *à compléter* | *à compléter* |
-| Compte GitHub | *à compléter* | *à compléter* |
+| Nom | Mohammed Haitham Msika | Mohammed Haitham Msika |
+| Compte GitHub | haithammsika05 | haithammsika05 |
 
-**Dépôt** : *adresse du dépôt GitHub, à compléter*
+**Dépôt** : https://github.com/haithammsika05/IA-DEV-MOHAMMEDHAITHAMMSIKA.git
 
 ## Comment remplir ce journal
 
@@ -54,14 +54,18 @@ git config --global user.name
 **Obtenu** :
 
 ```text
-À compléter
+ -V:3.14 *        Python 3.14.4
+ -V:3.11          Python 3.11 (64-bit)
+Python 3.11.0
+git version 2.52.0.windows.1
+Haitham Msika
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> J'ai vérifié la disponibilité de Python 3.11 et de Git sur mon environnement Windows. Mon identité locale est bien configurée avec mon nom d'utilisateur. Le poste est prêt pour la mise en place du projet.
 
 ![Poste du membre A](captures/tp0-poste-membre-a.png)
 
@@ -79,14 +83,18 @@ git config --global user.name
 **Obtenu** :
 
 ```text
-À compléter
+ -V:3.14 *        Python 3.14.4
+ -V:3.11          Python 3.11 (64-bit)
+Python 3.11.0
+git version 2.52.0.windows.1
+Haitham Msika
 ```
 
 - [ ] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> Réalisant ce travail de manière individuelle, j'exécute l'ensemble des tâches sur mon unique poste de travail. L'environnement Python et Git est parfaitement opérationnel, mais le nom d'utilisateur reste identique pour les deux rôles. Cette divergence par rapport au binôme standard est normale et documentée dans le cadre d'un travail en solo.
 
 ![Poste du membre B](captures/tp0-poste-membre-b.png)
 
@@ -175,7 +183,7 @@ git add -A
 git status
 git commit -m "TP1 : environnement, structure et cadrage"
 git branch -M main
-git remote add origin https://github.com/<compte-A>/sentiment-app.git
+git remote add origin https://github.com/haithammsika05/IA-DEV-MOHAMMEDHAITHAMMSIKA.git
 git push -u origin main
 python -m pytest -q
 ```
@@ -199,7 +207,7 @@ python -m pytest -q
 ### T4 · L'environnement du membre B (membre B)
 
 ```powershell
-git clone https://github.com/<compte-A>/sentiment-app.git sentiment-app
+git clone https://github.com/haithammsika05/IA-DEV-MOHAMMEDHAITHAMMSIKA.git sentiment-app
 cd sentiment-app
 py -3.11 -m venv .venv
 .venv\Scripts\Activate.ps1
@@ -280,7 +288,7 @@ python -m pytest -q
 
 ```powershell
 cd $env:TEMP
-git clone https://github.com/<compte-A>/sentiment-app.git verif
+git clone https://github.com/haithammsika05/IA-DEV-MOHAMMEDHAITHAMMSIKA.git verif
 cd verif
 py -3.11 -m venv .venv
 .venv\Scripts\Activate.ps1
