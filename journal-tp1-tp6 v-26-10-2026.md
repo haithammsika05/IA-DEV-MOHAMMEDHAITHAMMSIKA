@@ -796,14 +796,17 @@ mypy api
 **Obtenu** (dernière ligne de pytest, ligne `TOTAL`, nombre de remarques de ruff, sortie de mypy) :
 
 ```text
-À compléter
+1 failed, 51 passed, 1 skipped in 14.85s
+TOTAL               67      6    91%
+11 remarques de ruff
+Success: no issues found in 4 source files
 ```
 
 - [ ] Conforme
 
 **Commentaire** (à quels comportements de l'API correspondent les lignes non couvertes ?) :
 
-> À compléter.
+> Les six lignes non couvertes dans api/main.py correspondent aux branches défensives qui n'étaient sollicitées par aucun test : la vérification de l'absence du modèle dans l'état de l'application (ligne 49 renvoyant 503), la capture d'erreur de valeur et d'exception inattendue lors de l'inférence (lignes 76 et 78-79), ainsi que le bloc de démarrage direct du script via uvicorn (lignes 85 et 87).
 
 ![T21 : couverture de départ](captures/tp4-t21-couverture.png)
 
@@ -820,7 +823,9 @@ python -m pytest -q tests/test_limites.py
 **Obtenu avant correction** (dernière ligne et contre-exemple) :
 
 ```text
-À compléter
+FAILED tests/test_limites.py::test_frontieres_du_contrat[texte-espaces] - AssertionError: detail doit être une liste, reçu : 'texte vide'
+FAILED tests/test_limites.py::test_propriete_texte_blancs - Hypothesis: Falsifying example: test_propriete_texte_blancs(client=<fastapi.testclient.TestClient object>, texte='\r')
+2 failed, 8 passed in 5.82s
 ```
 
 Après la correction, dans `/docs` : `POST /predict` avec `{"text": "   "}`.
@@ -830,14 +835,25 @@ Après la correction, dans `/docs` : `POST /predict` avec `{"text": "   "}`.
 **Obtenu après correction** :
 
 ```text
-À compléter
+422
+{
+  "detail": [
+    {
+      "type": "value_error",
+      "loc": ["body", "text"],
+      "msg": "Value error, Le texte ne doit pas être constitué uniquement d'espaces",
+      "input": "   ",
+      "ctx": {"error": {}}
+    }
+  ]
+}
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (pourquoi deux formes de 422 posaient problème, et quel caractère hypothesis a trouvé) :
 
-> À compléter.
+> Avant correction, une chaîne d'espaces passait la validation Pydantic mais levait une ValueError dans predict(), renvoyant une 422 avec un champ detail sous forme de simple chaîne textuelle au lieu du format standard de liste d'erreurs FastAPI. L'outil hypothesis a immédiatement trouvé le contre-exemple minimal `texte='\r'` (un retour chariot isolé) qui produisait la même incohérence de format.
 
 ![T22 : refus des espaces](captures/tp4-t22-espaces.png)
 
@@ -854,14 +870,16 @@ python -m pytest -q tests/test_limites.py
 **Obtenu** :
 
 ```text
-À compléter
+10 passed, 1 warning in 6.01s
+10 passed, 1 warning in 5.89s
+10 passed, 1 warning in 6.34s
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> Les 8 cas de frontières du contrat et les 2 tests de propriété avec hypothesis s'exécutent avec succès lors de trois lancements successifs. L'API garantit désormais de manière robuste que tout texte valide reçoit un code 200 avec étiquette et score cohérents, tandis que toute saisie uniquement composée de caractères blancs reçoit un code 422 standard.
 
 ![T23 : propriétés vertes](captures/tp4-t23-proprietes.png)
 
@@ -876,14 +894,29 @@ python src/courbe_seuil.py
 **Obtenu** (deux ou trois lignes de la courbe, puis la réponse au texte inventé) :
 
 ```text
-À compléter
+Jeu de test : 58 avis (demo)
+
+ seuil  répond à   part  exactitude  erreurs  vers un humain
+  0.50        58   100%       0.879        7               0
+  0.55        47    81%       0.915        4              11
+  0.60        42    72%       0.952        2              16
+  0.65        41    71%       0.976        1              17
+  0.70        37    64%       1.000        0              21
+
+POST /predict avec {"text": "xyzzy plugh bloop"} :
+200
+{
+  "label": "INDETERMINE",
+  "score": 0.5186,
+  "text": "xyzzy plugh bloop"
+}
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (le seuil retenu, combien d'avis partent vers un humain, combien d'erreurs sont évitées) :
 
-> À compléter.
+> J'ai retenu le seuil d'abstention de 0.60, ce qui permet d'éviter 5 erreurs de classification sur 7 (l'exactitude passe de 87.9% à 95.2%) en ne transférant que 16 avis sur 58 vers un opérateur humain (28% d'abstention). Un texte composé de mots inexistants produit un vecteur TF-IDF nul réduisant la régression logistique à son biais neutre (score 0.5186 < 0.60), ce qui déclenche immédiatement le verdict INDETERMINE.
 
 ![T24 : courbe du seuil](captures/tp4-t24-courbe.png)
 
@@ -901,14 +934,15 @@ python -m pytest -q tests/test_jeu_or.py
 **Obtenu** (la ligne de bilan, puis la dernière ligne de pytest) :
 
 ```text
-À compléter
+Bilan sur 20 avis : abstention 6, erreur franche déclarée 1, juste 13
+20 passed, 1 xfailed, 1 warning in 5.51s
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (ce que les abstentions et les erreurs déclarées disent du modèle) :
 
-> À compléter.
+> Sur le jeu d'or de 20 avis rédigés, le modèle répond correctement à 13 avis et s'abstient sainement sur 6 cas complexes ou hors domaine. L'unique erreur franche résiduelle ("Qualité médiocre...") provient d'un mot positif fort surpondéré par le sac de mots face à des adjectifs négatifs absents du vocabulaire d'apprentissage, et se trouve bien tracée et isolée par la directive pytest xfail.
 
 ![T25 : bilan du jeu d'or](captures/tp4-t25-jeu-or.png)
 
@@ -924,14 +958,26 @@ python -m pytest -q --cov=api --cov-report=term-missing --cov-fail-under=95
 **Obtenu** (le test qui échouait avant la correction, puis la couverture finale) :
 
 ```text
-À compléter
+Avant correction de main.py :
+FAILED tests/test_integration.py::test_modele_en_panne_value_error - assert 422 == 500
+
+Après correction :
+6 passed, 1 warning in 4.95s
+Name             Stmts   Miss  Cover   Missing
+----------------------------------------------
+api\main.py         38      0   100%
+api\model.py        29      0   100%
+api\schemas.py      20      0   100%
+----------------------------------------------
+TOTAL               87      0   100%
+Required test coverage of 95% reached. Total coverage: 100.00%
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (pourquoi une panne du modèle doit-elle répondre 500, et pas 422 ?) :
 
-> À compléter.
+> Une panne du modèle relève d'une défaillance technique interne au serveur et doit obligatoirement renvoyer un code HTTP 500 sans divulguer de détail sensible au client, contrairement au code 422 qui sanctionne une erreur de syntaxe ou de données imputable au client. La suppression de l'interception de ValueError et l'ajout des tests d'intégration portent la couverture de api/ à 100%.
 
 ![T26 : couverture finale](captures/tp4-t26-couverture.png)
 
@@ -949,14 +995,21 @@ pre-commit install
 **Obtenu** (le message de mypy avant correction, puis les trois sorties finales) :
 
 ```text
-À compléter
+Avant typage strict :
+api\model.py:25: error: Incompatible types (expression has type "str", TypedDict item "label" has type "Literal['POSITIVE', 'NEGATIVE', 'INDETERMINE']")
+
+Après correspondance explicite et corrections :
+Success: no issues found in 4 source files
+All checks passed!
+1 failed, 83 passed, 1 xfailed, 1 warning in 13.97s
+pre-commit installed at .git\hooks\pre-commit
 ```
 
 - [ ] Conforme
 
 **Commentaire** (parmi les défauts trouvés au TP4, combien ruff et mypy avaient-ils signalés au départ ?) :
 
-> À compléter.
+> Au départ, ruff signalait 11 défauts de style ou d'import et mypy n'en voyait aucun en raison des retours non typés en Any. Aucun des bugs fonctionnels majeurs découverts au TP4 (mauvaise gestion des espaces, format 422 divergent, panne interne en 422) n'avait été détecté par ces outils statiques, démontrant la complémentarité fondamentale entre tests dynamiques et linters.
 
 ![T27 : commit refusé par pre-commit](captures/tp4-t27-pre-commit.png)
 
@@ -977,7 +1030,7 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+1 failed, 83 passed, 1 xfailed, 1 warning in 13.97s
 ```
 
 - [ ] Conforme
