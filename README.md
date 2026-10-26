@@ -45,7 +45,7 @@ sentiment-app/
 | Rôle | Nom | Identifiant GitHub | Travail de la semaine 1 |
 |---|---|---|---|
 | Membre A | Mohammed Haitham Msika | [@haithammsika05](https://github.com/haithammsika05) | Création du dépôt GitHub, initialisation Git, premier commit et configuration de l'environnement Python |
-| Membre B | Zakaria Elaimari | À compléter | Participation au projet et contribution personnelle au dépôt |
+| Membre B | Mohammed Haitham Msika | [@haithammsika05](https://github.com/haithammsika05) | Travail individuel (rôle B) : vérification de l'environnement et validation des tests |
 
 ## Objectifs de la semaine 1
 
