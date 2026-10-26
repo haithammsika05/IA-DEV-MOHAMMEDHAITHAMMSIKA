@@ -55,7 +55,3 @@ sentiment-app/
 - [ ] Compléter les trois fiches de cadrage
 - [ ] Vérifier les tests avec `pytest -q`
 - [ ] Vérifier que les deux membres ont chacun un commit
-
-## Contribution du membre B
-
-Zakaria Elaimari

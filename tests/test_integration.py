@@ -28,7 +28,6 @@ def test_modele_absent_refuse_demarrage(monkeypatch):
     """D.2 : chemin du modèle redirigé, cache vidé, l'API refuse de démarrer."""
     from fastapi.testclient import TestClient
 
-    import api.model
     from api.main import app
 
     predict_mod = sys.modules.get("predict")
@@ -37,7 +36,6 @@ def test_modele_absent_refuse_demarrage(monkeypatch):
 
     predict_mod.charger_modele.cache_clear()
     monkeypatch.setattr(predict_mod, "MODELE", Path("models/absent_inexistant.joblib"))
-    monkeypatch.setattr(api.model, "MODELE", Path("models/absent_inexistant.joblib"))
 
     with pytest.raises(FileNotFoundError, match="absent"):
         with TestClient(app):

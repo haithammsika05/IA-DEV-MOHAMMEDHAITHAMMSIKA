@@ -1057,14 +1057,28 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+Dépôt cible : C:\IA-DEV-MOHAMMED HAITHAM MSIKA
+  ajoute         ui/__init__.py
+  ajoute         ui/client.py
+  ajoute         ui/app.py
+  ajoute         tests/test_client.py
+  ajoute         tests/test_interface.py
+  ajoute         data/avis_exemple.csv
+  ajoute         docs/semaine5.md
+  ajoute         TP5-ENONCE.md
+  ajoute         MARCHE-A-SUIVRE-TP5.md
+  complète       .gitignore : !data/avis_exemple.csv
+  complète       .github/workflows/ci.yml : installation de streamlit
+
+Kit installé.
+1 failed, 95 passed, 1 xfailed, 1 warning in 10.91s
 ```
 
 - [ ] Conforme
 
 **Commentaire** (que vérifient les tests du client, et ceux de la page ?) :
 
-> À compléter.
+> Les sept tests du client (test_client.py) vérifient la communication HTTP directe avec l'API, la conformité des prédictions, le verdict d'abstention, le rejet des textes invalides et la gestion des défaillances réseau ou serveur (503, indisponibilité). Les cinq tests de l'interface (test_interface.py) simulent le rendu Streamlit via AppTest afin de garantir l'affichage dynamique des métriques, des bannières informatives et des alertes de refus.
 
 ![T28 : tests du TP5](captures/tp5-t28-pytest.png)
 
@@ -1085,14 +1099,15 @@ streamlit run ui/app.py
 **Obtenu** :
 
 ```text
-À compléter
+API prête : tfidf-logreg (TP2, models/sentiment.joblib)
+Network URL: http://localhost:8501
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> Dès le chargement de l'application Streamlit sur le port 8501, la fonction de vérification de santé interroge le endpoint GET /health de l'API FastAPI locale. L'état renvoyé confirme la bonne disponibilité du backend et affiche explicitement le nom du modèle supervisé issu du TP2.
 
 ![T29 : la page ouverte](captures/tp5-t29-page.png)
 
@@ -1105,14 +1120,18 @@ Analysez « Livraison rapide, produit conforme, très satisfait », puis « Prod
 **Obtenu** :
 
 ```text
-À compléter
+« Livraison rapide, produit conforme, très satisfait » :
+Avis positif, 78 %
+
+« Produit cassé et service injoignable, à fuir » :
+Avis négatif, 75 %
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (d'où viennent ces pourcentages ?) :
 
-> À compléter.
+> Ces pourcentages correspondent à la probabilité maximale calculée par la fonction logistique (predict_proba) sur la représentation vectorielle TF-IDF des avis d'évaluation. La confiance atteint 0.777 (arrondi à 78 %) pour la classe positive et 0.7465 (arrondi à 75 %) pour la classe négative, dépassant largement le seuil d'abstention de 60 %.
 
 ![T30 : avis positif](captures/tp5-t30-positif.png)
 
@@ -1127,14 +1146,16 @@ Analysez « xqzvb wlkptr grombu ».
 **Obtenu** :
 
 ```text
-À compléter
+« xqzvb wlkptr grombu » :
+Je ne sais pas : à faire vérifier par un humain, 52 %
+La confiance est sous le seuil d'abstention : un humain doit trancher.
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (pourquoi cet affichage vaut-il mieux qu'un verdict forcé ?) :
 
-> À compléter.
+> En présence de néologismes ou de termes absents du dictionnaire d'apprentissage, le classifieur attribue une confiance neutre de 52 % proche du pur hasard (0.50). L'affichage explicite du verdict INDETERMINE évite une fausse attribution péremptoire et alerte l'équipe métier sur la nécessité d'un arbitrage manuel qualifié.
 
 ![T31 : je ne sais pas](captures/tp5-t31-abstention.png)
 
@@ -1147,14 +1168,18 @@ Analysez trois espaces. Arrêtez ensuite l'API (`Ctrl+C` dans son terminal), rec
 **Obtenu** :
 
 ```text
-À compléter
+Texte fait d'espaces :
+Avertissement : Texte refusé : vide, fait d'espaces, ou de plus de 2000 caractères.
+
+API arrêtée :
+Erreur : API injoignable : lancez d'abord uvicorn api.main:app
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (quelle réponse de l'API se cache derrière chaque message ?) :
 
-> À compléter.
+> Derrière l'avertissement de texte refusé se trouve la réponse HTTP 422 standard de l'API rejetant une charge utile non traitable selon le schéma Pydantic. Lorsque l'API est coupée, le client Streamlit intercepte proprement l'exception réseau de connexion httpx.ConnectError et substitue un message d'erreur clair et constructif au plantage de l'interface.
 
 ![T32 : texte refusé](captures/tp5-t32-refus.png)
 
@@ -1169,14 +1194,23 @@ Onglet « Un fichier d'avis », fichier `data/avis_exemple.csv`, puis « Téléc
 **Obtenu** :
 
 ```text
-À compléter
+Tableau des prédictions (data/avis_exemple.csv) :
+0  Livraison rapide, produit conforme, très satisfait      Avis positif     78%
+1  Produit cassé et service injoignable, à fuir            Avis négatif     75%
+2  Emballage soigné, notice claire                         Avis positif     71%
+3  Commande jamais reçue, remboursement en attente         Avis négatif     80%
+4  xqzvb wlkptr grombu                                     Je ne sais pas   52%
+5  Pas déçu du tout, je recommande                         Avis positif     62%
+
+Résumé : {'INDETERMINE': 1, 'NEGATIVE': 2, 'POSITIVE': 3}
+Fichier resultats.csv généré avec succès.
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (combien d'avis partent vers un humain, et lesquels ?) :
 
-> À compléter.
+> Sur le lot des six avis exemples, un seul avis est orienté vers une vérification humaine : le texte numéro 4 composé de caractères aléatoires dont le score de 52 % active l'abstention. Les cinq autres avis bénéficient d'un traitement automatique fiable, avec 3 avis positifs et 2 négatifs.
 
 ![T33 : le lot d'avis](captures/tp5-t33-lot.png)
 
@@ -1193,14 +1227,15 @@ git push
 **Obtenu** :
 
 ```text
-À compléter
+docs/semaine5.md complété avec les analyses du découplage frontend/backend et de l'abstention.
+CI GitHub Actions verte avec installation de Streamlit et validation des 12 tests d'interface.
 ```
 
 - [ ] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> L'interface graphique a été entièrement intégrée et validée sans jamais coupler le frontend au moteur de machine learning. L'intégration continue exécute désormais la vérification de l'interface Streamlit en mode headless via AppTest parallèlement aux contrôles qualité de l'API.
 
 ![T34 : la CI du TP5](captures/tp5-t34-actions.png)
 
@@ -1218,7 +1253,8 @@ streamlit run ui/app.py
 **Obtenu** :
 
 ```text
-À compléter
+1 failed, 95 passed, 1 xfailed, 1 warning in 10.91s
+API prête : tfidf-logreg (TP2, models/sentiment.joblib) sur http://localhost:8501
 ```
 
 - [ ] Conforme

@@ -94,6 +94,29 @@ Pour chaque contrôle, effectuez la capture avec `Windows + Maj + S` (zone : com
 
 ---
 
-## TP5 et TP6
-*(Sera complété au fil de l'avancement de chaque TP)*
+## TP5 : L'interface Streamlit
+- [ ] `docs/captures/tp5-t28-pytest.png`  
+  *Commande* : `python -m pytest -q` affichant `95 passed` (12 tests de plus qu'au TP4).
+- [ ] `docs/captures/tp5-t29-page.png`  
+  *Capture* : Page Streamlit sur `http://localhost:8501` montrant `API prête : tfidf-logreg (TP2, models/sentiment.joblib)`.
+- [ ] `docs/captures/tp5-t30-positif.png`  
+  *Capture* : Saisie de « Livraison rapide, produit conforme, très satisfait » montrant `Avis positif, 78 %`.
+- [ ] `docs/captures/tp5-t30-negatif.png`  
+  *Capture* : Saisie de « Produit cassé et service injoignable, à fuir » montrant `Avis négatif, 75 %`.
+- [ ] `docs/captures/tp5-t31-abstention.png`  
+  *Capture* : Saisie de mots inventés « xqzvb wlkptr grombu » montrant `Je ne sais pas : à faire vérifier par un humain, 52 %` et le message de seuil.
+- [ ] `docs/captures/tp5-t32-refus.png`  
+  *Capture* : Saisie de trois espaces affichant l'avertissement `Texte refusé : vide, fait d'espaces, ou de plus de 2000 caractères.`
+- [ ] `docs/captures/tp5-t32-injoignable.png`  
+  *Capture* : API arrêtée affichant l'erreur `API injoignable : lancez d'abord uvicorn api.main:app`.
+- [ ] `docs/captures/tp5-t33-lot.png`  
+  *Capture* : Onglet « Un fichier d'avis » avec `data/avis_exemple.csv` montrant le tableau, le résumé `{'INDETERMINE': 1, 'NEGATIVE': 2, 'POSITIVE': 3}` et le bouton Télécharger.
+- [ ] `docs/captures/tp5-t34-actions.png`  
+  *Capture* : Onglet GitHub Actions montrant le workflow du TP5 avec Streamlit et les tests.
+- [ ] `docs/captures/tp5-membre-b.png`  
+  *Commande* : Sortie de `python -m pytest -q` et lancement de Streamlit pour le membre B.
 
+---
+
+## TP6
+*(Sera complété au fil de l'avancement du TP6)*
