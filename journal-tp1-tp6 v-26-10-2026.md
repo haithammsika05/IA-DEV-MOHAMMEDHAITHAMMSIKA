@@ -382,14 +382,26 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+Dépôt cible : C:\IA-DEV-MOHAMMED HAITHAM MSIKA
+  ajoute         src/make_demo.py
+  ajoute         src/train.py
+  ajoute         src/evaluate.py
+  ajoute         src/predict.py
+  ajoute         tests/test_model.py
+  ajoute         notebooks/TP2-colab.ipynb
+  ajoute         TP2-ENONCE.md
+  ajoute         MARCHE-A-SUIVRE-TP2.md
+  ajoute         .gitignore : !models/metrics.json
+
+Simulation : rien n'a été écrit.
+3 failed, 37 passed, 2 skipped in 4.41s
 ```
 
 - [ ] Conforme
 
 **Commentaire** (que réclament les deux échecs ?) :
 
-> À compléter.
+> J'ai appliqué le script d'installation du kit TP2 qui a injecté l'ensemble des modules d'entraînement et d'évaluation sous src/ ainsi que les tests de modèle. Les deux échecs de test_model.py réclament le fichier models/metrics.json produit lors de l'entraînement, et deux tests sont ignorés faute de modèle binaire sérialisé ; le troisième échec est lié au test d'historique de commits du binôme.
 
 ![C1 : point de départ du TP2](captures/tp2-c1-pytest.png)
 
@@ -404,14 +416,16 @@ python src/make_demo.py
 **Obtenu** :
 
 ```text
-À compléter
+290 avis écrits dans data\demo_reviews.csv
+  145 positifs, 145 négatifs
+  dont 100 avis mitigés et 30 neutres, volontairement difficiles
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (recopiez un avis mitigé et expliquez sa structure) :
 
-> À compléter.
+> Exemple d'avis mitigé : « Je recommande sans hésiter au déballage, jusqu'à ce que commande jamais reçue et remboursement en attente. » (label: negative). Cet avis oppose une première clause laudative à une seconde clause résolutive introduite par la locution adversative « jusqu'à ce que », qui renverse la polarité globale et détermine le sentiment négatif final.
 
 ![C2 : jeu de démonstration](captures/tp2-c2-make-demo.png)
 
@@ -427,14 +441,26 @@ git status --short
 **Obtenu** :
 
 ```text
-À compléter
+Source : demo, 290 avis (145 négatifs)
+232 avis d'entraînement, 58 de test
+Vocabulaire : 316 termes
+F1 macro sur le jeu de test : 0.879 (seuil 0.85)
+Modèle : models\sentiment.joblib
+Métriques : models\metrics.json (versionné dans Git, contrairement au modèle)
+ M .gitignore
+?? MARCHE-A-SUIVRE-TP2.md
+?? TP2-ENONCE.md
+?? models/metrics.json
+?? notebooks/
+?? src/
+?? tests/test_model.py
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (pourquoi la mesure est-elle versionnée, et pas le modèle ?) :
 
-> À compléter.
+> Le fichier models/metrics.json est un document texte léger qui enregistre les scores de performance pour garantir la traçabilité et le suivi qualité dans l'historique Git. Le fichier binaire models/sentiment.joblib est quant à lui volumineux, non diffable et spécifique à l'environnement d'exécution, d'où son exclusion raisonnée du versionnement de code source.
 
 ![C3 : entraînement](captures/tp2-c3-train.png)
 
@@ -449,14 +475,22 @@ python src/evaluate.py
 **Obtenu** (la matrice et les trois erreurs affichées) :
 
 ```text
-À compléter
+Matrice de confusion (lignes = vérité, colonnes = prédiction)
+            negative  positive
+  negative        27         2
+  positive         5        24
+
+7 erreurs au total. Trois exemples :
+  vérité=positive  prédit=negative  | Taille trop petite et retour payant au déballage, sauf que ensuite produit conforme à la d
+  vérité=positive  prédit=negative  | Commande jamais reçue et remboursement en attente au début, sauf que ensuite je recommande
+  vérité=negative  prédit=positive  | Service impeccable et livraison en avance sur le papier, sauf que ensuite produit cassé à
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (pourquoi le modèle se trompe-t-il sur ces avis ?) :
 
-> À compléter.
+> Le modèle s'appuie sur une représentation sac de mots n-grammes couplée à une régression logistique, ce qui ne lui confère aucune compréhension syntaxique des subordinations complexes. Lorsque les phrases combinent des segments de polarités opposées reliés par des conjonctions comme « sauf que ensuite », les termes dominants d'une clause trompent la prédiction linéaire.
 
 ![C4 : matrice de confusion](captures/tp2-c4-evaluate.png)
 
@@ -475,14 +509,20 @@ git push
 **Obtenu** :
 
 ```text
-À compléter
+Source : allocine, 20000 avis (10204 négatifs)
+16000 avis d'entraînement, 4000 de test
+Vocabulaire : 149529 termes
+F1 macro sur le jeu de test : 0.920 (seuil 0.85)
+Modèle : models\sentiment.joblib
+Métriques : models\metrics.json (versionné dans Git, contrairement au modèle)
+1 failed, 41 passed in 4.50s
 ```
 
 - [ ] Conforme
 
 **Commentaire** (pourquoi le F1 est-il meilleur sur Allociné ?) :
 
-> À compléter.
+> Sur le jeu Allociné, le score F1 macro atteint 0.920 grâce au volume substantiel de données d'apprentissage (16 000 exemples) et à la richesse du vocabulaire extrait (près de 150 000 termes). Tous les tests applicatifs et de modèle passent (41 validés sur 42), le seul test restant en échec étant celui de l'historique des deux auteurs en raison de mon travail individuel.
 
 ![C5 : Allociné et tests](captures/tp2-c5-allocine.png)
 
@@ -500,7 +540,7 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+1 failed, 41 passed in 4.50s
 ```
 
 - [ ] Conforme
