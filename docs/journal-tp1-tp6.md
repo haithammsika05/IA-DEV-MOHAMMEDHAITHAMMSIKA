@@ -215,14 +215,20 @@ python -m pytest -q
 **Obtenu** (extrait de `git status`, dernière ligne de pytest) :
 
 ```text
-À compléter
+Changes to be committed:
+	new file:   .env.example
+	new file:   .github/workflows/ci.yml
+	new file:   .gitignore
+	new file:   README.md
+	...
+1 failed, 37 passed in 3.12s
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (quel test échoue encore, et pourquoi ?) :
 
-> À compléter.
+> Le premier commit et le push sur GitHub se sont déroulés avec succès, en excluant strictement l'environnement virtuel et les fichiers sensibles. Le seul test en échec est test_each_member_has_committed dans tests/test_git_history.py, ce qui est normal puisque je réalise ce projet de manière individuelle avec un seul compte Git.
 
 ![T3 : le dépôt sur GitHub](captures/tp1-t3-depot-github.png)
 
@@ -242,14 +248,31 @@ python scripts/check_setup.py
 **Obtenu** :
 
 ```text
-À compléter
+Diagnostic TP1 dans sentiment-app
+
+Python
+  OK         version 3.11.0
+  OK         environnement virtuel actif
+Paquets
+  OK         pandas 2.2.3
+  OK         scikit-learn 1.5.2
+  OK         pytest 8.3.5
+Structure du dépôt
+  OK         7 dossiers et 3 fichiers requis
+Git
+  OK         dépôt Git détecté
+  ATTENTION  1 auteur(s) seulement : les deux membres doivent pousser un commit
+Fiches de cadrage
+  OK         3 fiches trouvées et conformes
+
+Résultat : 0 erreur(s), 1 avertissement(s)
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> J'ai configuré et vérifié l'environnement pour le rôle du membre B sur mon poste. Le diagnostic d'installation est validé avec zéro erreur bloquante. L'unique avertissement concerne le commit d'un second membre, attendu dans le cadre de ce travail individuel.
 
 ![T4 : diagnostic du membre B](captures/tp1-t4-check-setup-b.png)
 
@@ -269,14 +292,17 @@ python -m pytest tests/test_git_history.py -q
 **Obtenu** :
 
 ```text
-À compléter
+     3	Haitham Msika
+
+FAILED tests/test_git_history.py::test_each_member_has_committed - AssertionError: 1 auteur(s) de commits, 2 attendus (un par membre du binôme) : ['Haitham Msika']
+1 failed, 2 passed in 0.43s
 ```
 
 - [ ] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> J'ai mis à jour le README avec mon identité pour le second rôle et poussé le commit. Le shortlog n'affiche qu'un seul auteur (Haitham Msika) au lieu des deux attendus pour un binôme, provoquant l'échec du test d'historique. Conformément aux consignes de travail individuel, je n'ai créé aucune fausse identité pour contourner ce test.
 
 ![T5 : deux auteurs](captures/tp1-t5-shortlog.png)
 
@@ -293,14 +319,16 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+Résultat : 0 erreur(s), 1 avertissement(s)
+Environnement utilisable ; traiter les avertissements avant la fin du TP.
+1 failed, 37 passed in 3.22s
 ```
 
 - [ ] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> J'ai exécuté la vérification finale combinant le diagnostic d'environnement et l'ensemble de la suite de tests. 37 tests sur 38 passent avec succès et l'arborescence est parfaitement intègre. Le seul échec résiduel reste le test du binôme Git, cohérent avec ma modalité de travail en solo.
 
 ![T6 : pytest final](captures/tp1-t6-pytest.png)
 
@@ -324,14 +352,16 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+Cloning into 'verif'...
+Résultat : 0 erreur(s), 1 avertissement(s)
+1 failed, 37 passed in 3.29s
 ```
 
 - [ ] Conforme
 
 **Commentaire** (qu'est-ce que ce contrôle prouve que T6 ne prouvait pas ?) :
 
-> À compléter.
+> Ce contrôle dans un dossier temporaire prouve que le dépôt distant est entièrement autonome et reproductible sans dépendance locale masquée. L'environnement s'installe et s'exécute immédiatement avec 37 tests validés sans modification. Comme attendu, seul le test réclamant deux auteurs distincts échoue en travail individuel.
 
 ![T7 : clone frais](captures/tp1-t7-clone-frais.png)
 

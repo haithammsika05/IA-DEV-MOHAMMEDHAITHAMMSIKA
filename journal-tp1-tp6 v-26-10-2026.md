@@ -113,14 +113,32 @@ Get-ChildItem -Force
 **Obtenu** :
 
 ```text
-À compléter
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d--h--        26/10/2026     15:55                .git
+d-----        26/10/2026     16:19                .github
+d-----        26/10/2026     16:19                app
+d-----        26/10/2026     16:19                data
+d-----        26/10/2026     16:19                docs
+d-----        26/10/2026     16:19                models
+d-----        26/10/2026     16:19                scripts
+d-----        26/10/2026     16:19                tests
+d-----        26/10/2026     16:19                ui
+-a----        15/10/2026     15:32            120 .env.example
+-a----        15/10/2026     15:32            347 .gitignore
+-a----        15/10/2026     15:32             41 pytest.ini
+-a----        15/10/2026     15:32           1853 README.md
+-a----        15/10/2026     15:32           6650 requirements.lock
+-a----        15/10/2026     15:32            260 requirements.txt
+-a----        15/10/2026     15:32           5956 TESTS.md
+-a----        15/10/2026     15:32           7959 TP1-ENONCE.md
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> J'ai vérifié l'arborescence complète du kit après son extraction à la racine du dépôt. Les sept dossiers requis ainsi que les fichiers de configuration (.github, .gitignore, .env.example) sont bien présents. L'organisation du projet est conforme aux consignes.
 
 ![T0 : structure du kit](captures/tp1-t0-structure.png)
 
@@ -141,14 +159,17 @@ python -m pytest -q
 **Obtenu** (version de Python, résumé du diagnostic, dernière ligne de pytest) :
 
 ```text
-À compléter
+Python 3.11.0
+Résultat : 0 erreur(s), 1 avertissement(s)
+Environnement utilisable ; traiter les avertissements avant la fin du TP.
+1 failed, 37 passed in 2.66s
 ```
 
 - [ ] Conforme
 
 **Commentaire** (que réclament les trois échecs, et pourquoi quatre tests sont ignorés ?) :
 
-> À compléter.
+> J'ai initialisé l'environnement virtuel sous Python 3.11 et installé les dépendances sans encombre. Le script de diagnostic ne relève aucune erreur bloquante et un avertissement sur le nombre d'auteurs Git. Le résultat de pytest affiche 1 échec au lieu des 3 prévus initialement car les fiches de cadrage étaient déjà complétées, l'unique échec persistant étant lié à la vérification des deux auteurs de commits pour un binôme.
 
 ![T1 : pytest au départ](captures/tp1-t1-pytest.png)
 
@@ -164,14 +185,15 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+12 passed in 0.05s
+1 failed, 37 passed in 3.55s
 ```
 
 - [ ] Conforme
 
 **Commentaire** (l'approche retenue pour chacun des trois cas, et les deux critères qui la justifient) :
 
-> À compléter.
+> Pour le cas 1 (pharmacie), j'ai retenu les règles métier en raison de la vérifiabilité des décisions et de l'absence de besoin de données annotées. Pour le cas 2 (règlement), l'approche RAG a été choisie pour la fraîcheur des données et la traçabilité des sources. Pour le cas 3 (avis), la classification supervisée a été sélectionnée grâce au volume d'exemples disponibles et au faible coût par requête ; l'écart sur le nombre de tests passés s'explique par l'absence de commits d'un second membre.
 
 ![T2 : fiches complètes](captures/tp1-t2-cadrage.png)
 
@@ -193,14 +215,20 @@ python -m pytest -q
 **Obtenu** (extrait de `git status`, dernière ligne de pytest) :
 
 ```text
-À compléter
+Changes to be committed:
+	new file:   .env.example
+	new file:   .github/workflows/ci.yml
+	new file:   .gitignore
+	new file:   README.md
+	...
+1 failed, 37 passed in 3.12s
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (quel test échoue encore, et pourquoi ?) :
 
-> À compléter.
+> Le premier commit et le push sur GitHub se sont déroulés avec succès, en excluant strictement l'environnement virtuel et les fichiers sensibles. Le seul test en échec est test_each_member_has_committed dans tests/test_git_history.py, ce qui est normal puisque je réalise ce projet de manière individuelle avec un seul compte Git.
 
 ![T3 : le dépôt sur GitHub](captures/tp1-t3-depot-github.png)
 
@@ -220,14 +248,31 @@ python scripts/check_setup.py
 **Obtenu** :
 
 ```text
-À compléter
+Diagnostic TP1 dans sentiment-app
+
+Python
+  OK         version 3.11.0
+  OK         environnement virtuel actif
+Paquets
+  OK         pandas 2.2.3
+  OK         scikit-learn 1.5.2
+  OK         pytest 8.3.5
+Structure du dépôt
+  OK         7 dossiers et 3 fichiers requis
+Git
+  OK         dépôt Git détecté
+  ATTENTION  1 auteur(s) seulement : les deux membres doivent pousser un commit
+Fiches de cadrage
+  OK         3 fiches trouvées et conformes
+
+Résultat : 0 erreur(s), 1 avertissement(s)
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> J'ai configuré et vérifié l'environnement pour le rôle du membre B sur mon poste. Le diagnostic d'installation est validé avec zéro erreur bloquante. L'unique avertissement concerne le commit d'un second membre, attendu dans le cadre de ce travail individuel.
 
 ![T4 : diagnostic du membre B](captures/tp1-t4-check-setup-b.png)
 
@@ -247,14 +292,17 @@ python -m pytest tests/test_git_history.py -q
 **Obtenu** :
 
 ```text
-À compléter
+     3	Haitham Msika
+
+FAILED tests/test_git_history.py::test_each_member_has_committed - AssertionError: 1 auteur(s) de commits, 2 attendus (un par membre du binôme) : ['Haitham Msika']
+1 failed, 2 passed in 0.43s
 ```
 
 - [ ] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> J'ai mis à jour le README avec mon identité pour le second rôle et poussé le commit. Le shortlog n'affiche qu'un seul auteur (Haitham Msika) au lieu des deux attendus pour un binôme, provoquant l'échec du test d'historique. Conformément aux consignes de travail individuel, je n'ai créé aucune fausse identité pour contourner ce test.
 
 ![T5 : deux auteurs](captures/tp1-t5-shortlog.png)
 
@@ -271,14 +319,16 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+Résultat : 0 erreur(s), 1 avertissement(s)
+Environnement utilisable ; traiter les avertissements avant la fin du TP.
+1 failed, 37 passed in 3.22s
 ```
 
 - [ ] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> J'ai exécuté la vérification finale combinant le diagnostic d'environnement et l'ensemble de la suite de tests. 37 tests sur 38 passent avec succès et l'arborescence est parfaitement intègre. Le seul échec résiduel reste le test du binôme Git, cohérent avec ma modalité de travail en solo.
 
 ![T6 : pytest final](captures/tp1-t6-pytest.png)
 
@@ -302,14 +352,16 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+Cloning into 'verif'...
+Résultat : 0 erreur(s), 1 avertissement(s)
+1 failed, 37 passed in 3.29s
 ```
 
 - [ ] Conforme
 
 **Commentaire** (qu'est-ce que ce contrôle prouve que T6 ne prouvait pas ?) :
 
-> À compléter.
+> Ce contrôle dans un dossier temporaire prouve que le dépôt distant est entièrement autonome et reproductible sans dépendance locale masquée. L'environnement s'installe et s'exécute immédiatement avec 37 tests validés sans modification. Comme attendu, seul le test réclamant deux auteurs distincts échoue en travail individuel.
 
 ![T7 : clone frais](captures/tp1-t7-clone-frais.png)
 
