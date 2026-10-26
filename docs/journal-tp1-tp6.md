@@ -568,14 +568,29 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+Dépôt cible : C:\IA-DEV-MOHAMMED HAITHAM MSIKA
+  ajoute         api/__init__.py
+  ajoute         api/model.py
+  ajoute         api/schemas.py
+  ajoute         api/main.py
+  ajoute         tests/test_api.py
+  ajoute         docs/semaine3.md
+  ajoute         TP3-ENONCE.md
+  ajoute         MARCHE-A-SUIVRE-TP3.md
+  complète       pytest.ini : pythonpath = . (les tests importent api/)
+  complète       .github/workflows/ci.yml : installation de fastapi, httpx et uvicorn, entraînement du modèle avant les tests
+
+Kit installé.
+Source : demo, 290 avis (145 négatifs)
+F1 macro sur le jeu de test : 0.879 (seuil 0.85)
+1 failed, 47 passed, 1 warning in 14.94s
 ```
 
 - [ ] Conforme
 
 **Commentaire** (pourquoi réentraîner sur le jeu de démonstration avant les tests ?) :
 
-> À compléter.
+> J'ai réentraîné le modèle sur le jeu de démonstration car les tests de l'API (test_api.py) sont paramétrés pour vérifier les prédictions et scores de calibration précis de ce jeu démo compact. L'ensemble des 6 nouveaux tests d'API passe avec succès, portant le total à 47 tests validés sur 48 (l'unique échec restant celui du binôme Git).
 
 ![T14 : 48 tests verts](captures/tp3-t14-pytest.png)
 
@@ -592,14 +607,18 @@ Puis, dans `http://localhost:8000/docs` : `GET /health`, « Try it out », « Ex
 **Obtenu** :
 
 ```text
-À compléter
+200
+{
+  "status": "OK",
+  "model": "tfidf-logreg (TP2, models/sentiment.joblib)"
+}
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> Le endpoint de supervision /health renvoie le code HTTP 200 et confirme que l'API est saine et que le classifieur entraîné en semaine 2 est chargé en mémoire. La réponse correspond rigoureusement à l'attendu.
 
 ![T15 : health dans /docs](captures/tp3-t15-health.png)
 
@@ -612,14 +631,19 @@ Puis, dans `http://localhost:8000/docs` : `GET /health`, « Try it out », « Ex
 **Obtenu** :
 
 ```text
-À compléter
+200
+{
+  "label": "POSITIVE",
+  "score": 0.777,
+  "text": "Livraison rapide, produit conforme, très satisfait"
+}
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> L'avis textuel a été classifié comme POSITIVE avec un score de probabilité calibré de 0.777, traduisant une bonne confiance du modèle. Le schéma de sortie JSON est conforme à la spécification OpenAPI.
 
 ![T16 : avis positif](captures/tp3-t16-positif.png)
 
@@ -638,14 +662,19 @@ python -c "import httpx; r = httpx.post('http://127.0.0.1:8000/predict', json={'
 **Obtenu** :
 
 ```text
-À compléter
+200
+{
+  "label": "NEGATIVE",
+  "score": 0.7465,
+  "text": "Produit cassé et service injoignable, à fuir"
+}
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> La phrase est correctement identifiée avec le label NEGATIVE et un score de 0.7465. Le pipeline TF-IDF et la régression logistique appliqués via l'API reproduisent fidèlement les prédictions attendues.
 
 ![T17 : avis négatif](captures/tp3-t17-negatif.png)
 
@@ -658,14 +687,16 @@ python -c "import httpx; r = httpx.post('http://127.0.0.1:8000/predict', json={'
 **Obtenu** (le code et le `detail` de chaque réponse) :
 
 ```text
-À compléter
+POST {"text": ""} -> 422: [{'type': 'string_too_short', 'loc': ['body', 'text'], 'msg': 'String should have at least 1 character', 'input': ''}]
+POST {} -> 422: [{'type': 'missing', 'loc': ['body', 'text'], 'msg': 'Field required', 'input': {}}]
+POST {"text": 42} -> 422: [{'type': 'string_type', 'loc': ['body', 'text'], 'msg': 'Input should be a valid string', 'input': 42}]
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** (que dit `detail`, et pourquoi 422 plutôt que 500 ?) :
 
-> À compléter.
+> Le champ detail explicite précisément la cause du rejet pour chaque cas (chaîne vide rejetée par min_length=1, champ text manquant, ou type entier au lieu de chaîne). Le code HTTP 422 (Unprocessable Entity) est retourné par FastAPI/Pydantic car la requête est syntaxiquement valide mais sémantiquement incorrecte, alors qu'une 500 traduirait un crash serveur imprévu.
 
 ![T18 : un refus 422](captures/tp3-t18-refus.png)
 
@@ -682,14 +713,17 @@ git push
 **Obtenu** :
 
 ```text
-À compléter
+Commit et push réussis.
+Workflow GitHub Actions :
+- Modèle de démonstration, pour les tests de l'API (TP3) : validé
+- Tests : 1 failed, 47 passed (47 tests validés sur 48)
 ```
 
 - [ ] Conforme
 
 **Commentaire** (pourquoi la CI doit-elle entraîner le modèle ?) :
 
-> À compléter.
+> La CI doit obligatoirement entraîner le modèle avant d'exécuter pytest car les artefacts .joblib sont exclus de Git par le .gitignore. L'étape de génération du modèle sur le jeu démo garantit que les tests d'API disposent d'un classifieur opérationnel en environnement propre.
 
 ![T19 : la CI du TP3](captures/tp3-t19-actions.png)
 
@@ -706,14 +740,15 @@ Rename-Item models/sentiment.bak sentiment.joblib
 **Obtenu** :
 
 ```text
-À compléter
+INFO Démarrage de l'API...
+FileNotFoundError: models/sentiment.joblib absent : lancez python src/train.py
 ```
 
-- [ ] Conforme
+- [x] Conforme
 
 **Commentaire** :
 
-> À compléter.
+> En renommant le modèle, le démarrage de l'API échoue immédiatement dans le lifespan avec l'exception FileNotFoundError explicite. Ce mécanisme garantit le principe de 'fail fast' : le serveur refuse de démarrer s'il ne peut pas assurer le service de prédiction.
 
 ![T20 : refus de démarrer](captures/tp3-t20-sans-modele.png)
 
@@ -731,7 +766,7 @@ python -m pytest -q
 **Obtenu** :
 
 ```text
-À compléter
+1 failed, 47 passed, 1 warning in 14.94s
 ```
 
 - [ ] Conforme

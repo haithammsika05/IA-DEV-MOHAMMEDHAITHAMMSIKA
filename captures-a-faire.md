@@ -34,5 +34,21 @@ Pour chaque contrôle, effectuez la capture avec `Windows + Maj + S` (zone : com
 
 ---
 
-## TP2 à TP6
+## TP2 : Entraîner, évaluer et sauvegarder le modèle
+- [ ] `docs/captures/tp2-c1-pytest.png`  
+  *Commande* : Exécution de `appliquer_tp2.py` puis `pytest -q`.
+- [ ] `docs/captures/tp2-c2-make-demo.png`  
+  *Commande* : `python src/make_demo.py` affichant 290 avis écrits.
+- [ ] `docs/captures/tp2-c3-train.png`  
+  *Commande* : `python src/train.py` et `git status --short`.
+- [ ] `docs/captures/tp2-c4-evaluate.png`  
+  *Commande* : `python src/evaluate.py` affichant la matrice de confusion.
+- [ ] `docs/captures/tp2-c5-allocine.png`  
+  *Commande* : `python src/train.py --allocine` et `pytest -q`.
+- [ ] `docs/captures/tp2-membre-b.png`  
+  *Commande* : Résultat de pytest pour le poste du membre B.
+
+---
+
+## TP3 à TP6
 *(Sera complété au fil de l'avancement de chaque TP)*
