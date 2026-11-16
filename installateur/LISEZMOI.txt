@@ -1,0 +1,57 @@
+========================================================================
+               SENTIMENT APP - MODE D'EMPLOI (WINDOWS)
+========================================================================
+
+Sentiment App est un outil en ligne de commande d'analyse automatique de
+sentiment pour les avis clients en français (positif / négatif).
+
+Cette installation est entièrement autonome : elle embarque son propre
+environnement d'exécution Python et le modèle d'apprentissage automatique
+pré-entraîné. Aucune connexion Internet ni installation de Python n'est
+nécessaire sur votre machine.
+
+
+1. PREMIERS PAS
+------------------------------------------------------------------------
+Après l'installation, ouvrez un NOUVEAU terminal (PowerShell ou Invite
+de commandes Windows) ou cliquez sur le raccourci du menu Démarrer :
+  Menu Démarrer > Sentiment App > Analyser un avis
+
+
+2. COMMANDES PRINCIPALES
+------------------------------------------------------------------------
+Afficher la version installée :
+  sentiment --version
+
+Afficher l'aide complète :
+  sentiment --help
+
+Analyser un avis (affichage lisible) :
+  sentiment "Livraison rapide, très satisfait"
+  -> Exemple de sortie : positive (confiance 77%)
+
+Analyser un avis au format JSON (pour intégration ou scripts) :
+  sentiment --json "Colis abîmé, service client injoignable"
+  -> Exemple de sortie : {"label": "negative", "score": 0.6276}
+
+
+3. CODES DE RETOUR
+------------------------------------------------------------------------
+  0 : Analyse réussie.
+  2 : Arguments invalides ou texte vide (ex. : sentiment " " renvoie
+      "erreur : texte vide" avec le code de sortie 2).
+
+
+4. EMPLACEMENT ET DÉSINSTALLATION
+------------------------------------------------------------------------
+Dossier d'installation par défaut (sans droits administrateur) :
+  %LOCALAPPDATA%\Programs\sentiment-app
+
+Pour désinstaller l'application :
+  - Ouvrez Paramètres Windows > Applications > Applications installées,
+    recherchez "Sentiment App" et cliquez sur Désinstaller ;
+  - Ou utilisez le raccourci "Désinstaller" dans le menu Démarrer.
+
+La désinstallation supprime tous les fichiers de l'application et retire
+proprement le dossier du PATH de votre session utilisateur.
+========================================================================

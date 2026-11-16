@@ -38,3 +38,7 @@ htmlcov/
 
 # TP5
 !data/avis_exemple.csv
+
+# Installateur Windows
+installateur/build/
+installateur/Output/
