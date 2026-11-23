@@ -1,4 +1,5 @@
-# sentiment-app : dépôt du binôme
+# sentiment-app : dépôt 
+
 
 Application fil rouge du cours *Développement et déploiement d'applications intelligentes*.
 
